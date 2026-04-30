@@ -4,7 +4,7 @@
 
 {% block extra_css %}
 <style>
-    .dashboard-container {
+    .dashboard-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -13,150 +13,225 @@
     }
 
     .dashboard-card {
-        background: var(--bg-white);
-        border-radius: 12px;
+        background: var(--bg-primary);
+        border-radius: 16px;
         box-shadow: var(--shadow-lg);
-        padding: 3rem;
+        padding: 3.5rem;
         text-align: center;
-        max-width: 500px;
-        animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        max-width: 580px;
+        width: 100%;
+        animation: slideUpFade 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border-light);
     }
 
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    @keyframes slideUpFade {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     .dashboard-icon {
-        font-size: 4rem;
+        font-size: 4.5rem;
         margin-bottom: 1.5rem;
+        display: inline-block;
     }
 
     .dashboard-card h2 {
-        font-size: 1.875rem;
+        font-family: 'Poppins', sans-serif;
+        font-size: 2rem;
         font-weight: 700;
-        margin-bottom: 0.5rem;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        margin-bottom: 0.75rem;
+        color: var(--text-primary);
+        letter-spacing: -0.3px;
     }
 
     .dashboard-card p {
-        color: var(--text-light);
+        color: var(--text-secondary);
         font-size: 1rem;
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
         line-height: 1.6;
     }
 
     .role-badge {
         display: inline-block;
-        background: rgba(99, 102, 241, 0.1);
+        background: linear-gradient(135deg, rgba(91, 91, 255, 0.1), rgba(91, 91, 255, 0.05));
         color: var(--primary);
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 600;
-        font-size: 0.875rem;
-        margin-bottom: 1.5rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 24px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(91, 91, 255, 0.2);
+        letter-spacing: 0.3px;
+    }
+
+    .user-info {
+        background: var(--bg-secondary);
+        padding: 1.25rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-light);
+    }
+
+    .user-info p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+    }
+
+    .user-info strong {
+        color: var(--text-primary);
+        font-weight: 700;
     }
 
     .action-buttons {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 1rem;
     }
 
-    @media (min-width: 600px) {
+    @media (max-width: 600px) {
         .action-buttons {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
         }
     }
 
     .btn {
-        padding: 0.875rem 1.5rem;
+        padding: 1rem 1.5rem;
         border: none;
-        border-radius: 8px;
-        font-size: 0.875rem;
+        border-radius: 10px;
+        font-size: 0.9rem;
         font-weight: 600;
         cursor: pointer;
-        transition: var(--transition);
+        transition: var(--transition-fast);
         text-decoration: none;
         display: inline-block;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.3px;
+        font-family: 'Inter', sans-serif;
     }
 
     .btn-primary {
         background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
         color: white;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 4px 16px rgba(91, 91, 255, 0.24);
     }
 
     .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        box-shadow: 0 6px 24px rgba(91, 91, 255, 0.32);
     }
 
     .btn-secondary {
-        background: var(--bg);
+        background: var(--bg-secondary);
         color: var(--primary);
-        border: 2px solid var(--primary);
+        border: 1.5px solid var(--primary);
     }
 
     .btn-secondary:hover {
-        background: rgba(99, 102, 241, 0.1);
+        background: rgba(91, 91, 255, 0.08);
+        transform: translateY(-1px);
+    }
+
+    .btn:active {
+        transform: translateY(0);
+    }
+
+    .info-section {
+        background: linear-gradient(135deg, rgba(91, 91, 255, 0.05), rgba(91, 91, 255, 0.02));
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        border: 1px solid rgba(91, 91, 255, 0.1);
+    }
+
+    .info-section h3 {
+        color: var(--primary);
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.3px;
+    }
+
+    .info-section p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin: 0;
+        line-height: 1.6;
     }
 
     @media (max-width: 480px) {
         .dashboard-card {
-            padding: 1.5rem;
+            padding: 2rem;
         }
 
         .dashboard-card h2 {
-            font-size: 1.5rem;
+            font-size: 1.625rem;
         }
 
         .dashboard-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
+        }
+
+        .action-buttons {
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.875rem 1rem;
+            font-size: 0.85rem;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="dashboard-container">
+<div class="dashboard-wrapper">
     <div class="dashboard-card">
-        <div class="dashboard-icon">👋</div>
-        <h2>¡Bienvenido!</h2>
-        
+        <div class="dashboard-icon">✨</div>
+        <h2>¡Hola de nuevo!</h2>
+
         {% if user.groups.all %}
             <div class="role-badge">
-                {% if user.groups.all.0.name %}
-                    {{ user.groups.all.0.name }}
+                {% if user.groups.all.0.name == 'Administrador' %}
+                    👑 Administrador
+                {% elif user.groups.all.0.name == 'Profesor' %}
+                    👨‍🏫 Profesor
+                {% elif user.groups.all.0.name == 'Estudiante' %}
+                    📚 Estudiante
                 {% endif %}
             </div>
-            <p>Hola <strong>{{ user.get_full_name|default:user.username }}</strong>, bienvenido al sistema de evaluaciones.</p>
+
+            <div class="user-info">
+                <p>Bienvenido, <strong>{{ user.get_full_name|default:user.username }}</strong></p>
+            </div>
+
+            <div class="info-section">
+                <h3>📋 Acciones disponibles</h3>
+                <p>
+                    {% if user.groups.all.0.name == 'Estudiante' %}
+                        Accede a tus calificaciones y monitorea tu desempeño académico
+                    {% elif user.groups.all.0.name == 'Profesor' %}
+                        Gestiona las calificaciones de tus estudiantes de forma eficiente
+                    {% elif user.groups.all.0.name == 'Administrador' %}
+                        Administra el sistema, usuarios y configuraciones generales
+                    {% endif %}
+                </p>
+            </div>
         {% else %}
-            <p>Hola <strong>{{ user.username }}</strong>, has iniciado sesión exitosamente.</p>
+            <p>Bienvenido al sistema de gestión de evaluaciones</p>
         {% endif %}
 
         <div class="action-buttons">
             {% if user.groups.all.0.name == 'Estudiante' %}
                 <a href="/calificaciones/" class="btn btn-primary">Ver Calificaciones</a>
+                <a href="{% url 'usuarios:logout' %}" class="btn btn-secondary">Cerrar Sesión</a>
             {% elif user.groups.all.0.name == 'Profesor' %}
-                <a href="/calificaciones/" class="btn btn-primary">Administrar Calificaciones</a>
-                <a href="/admin/" class="btn btn-secondary">Panel Profesor</a>
+                <a href="/calificaciones/" class="btn btn-primary">Administrar Evaluaciones</a>
+                <a href="/admin/" class="btn btn-secondary">Panel de Control</a>
             {% elif user.groups.all.0.name == 'Administrador' %}
                 <a href="/admin/" class="btn btn-primary">Panel de Administración</a>
                 <a href="/calificaciones/" class="btn btn-secondary">Ver Evaluaciones</a>
             {% else %}
-                <a href="/usuarios/logout/" class="btn btn-secondary">Cerrar Sesión</a>
+                <a href="{% url 'usuarios:logout' %}" class="btn btn-primary">Cerrar Sesión</a>
             {% endif %}
         </div>
     </div>
