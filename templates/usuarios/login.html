@@ -1,12 +1,250 @@
 {% extends 'base.html' %}
-{% block title %}Iniciar Sesión{% endblock %}
+
+{% block title %}Iniciar Sesión - Sistema de Evaluaciones{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 120px);
+        padding: 2rem 1rem;
+    }
+
+    .auth-card {
+        background: var(--bg-primary);
+        border-radius: 16px;
+        box-shadow: var(--shadow-lg);
+        width: 100%;
+        max-width: 420px;
+        padding: 3rem;
+        animation: slideUpFade 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid var(--border-light);
+    }
+
+    @keyframes slideUpFade {
+        from { opacity: 0; transform: translateY(24px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .auth-icon { font-size: 3.5rem; margin-bottom: 1.25rem; display: inline-block; }
+
+    .auth-header h2 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        letter-spacing: -0.3px;
+    }
+
+    .auth-header p {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.625rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        letter-spacing: 0.3px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        font-size: 1rem;
+        font-family: 'Inter', sans-serif;
+        transition: var(--transition-fast);
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+    }
+
+    .form-group input::placeholder {
+        color: var(--text-light);
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: var(--bg-primary);
+        box-shadow: 0 0 0 4px rgba(91, 91, 255, 0.08);
+    }
+
+    .errorlist {
+        list-style: none;
+        margin: 0.75rem 0 1rem 0;
+        padding: 0;
+    }
+
+    .errorlist li {
+        background: rgba(239, 68, 68, 0.08);
+        color: var(--danger);
+        padding: 0.625rem 0.875rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        border-left: 3px solid var(--danger);
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+
+    .form-errors {
+        background: rgba(239, 68, 68, 0.08);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-errors p {
+        color: var(--danger);
+        font-size: 0.9rem;
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 0.95rem 1.5rem;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-fast);
+        letter-spacing: 0.3px;
+        box-shadow: 0 4px 16px rgba(91, 91, 255, 0.24);
+        margin-top: 1rem;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 24px rgba(91, 91, 255, 0.32);
+    }
+
+    .btn-submit:active { transform: translateY(0); }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        margin: 2rem 0 1.5rem;
+        gap: 1rem;
+    }
+
+    .divider::before, .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+    }
+
+    .divider span {
+        color: var(--text-light);
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .form-footer {
+        text-align: center;
+    }
+
+    .form-footer p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .form-footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition-fast);
+    }
+
+    .form-footer a:hover {
+        color: var(--primary-dark);
+        text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+        .auth-card { padding: 2rem; }
+        .auth-header h2 { font-size: 1.5rem; }
+        .auth-icon { font-size: 3rem; }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<h2>Iniciar sesión</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Entrar</button>
-</form>
-<a href="{% url 'registro' %}">¿No tienes cuenta? Regístrate</a>
-<a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-icon">🔐</div>
+            <h2>Bienvenido</h2>
+            <p>Inicia sesión en tu cuenta para continuar</p>
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="form-errors">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Usuario</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.username.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.password.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn-submit">Inicia Sesión</button>
+        </form>
+
+        <div class="divider">
+            <span>¿No tienes cuenta?</span>
+        </div>
+
+        <div class="form-footer">
+            <p><a href="{% url 'usuarios:registro' %}">Crear nueva cuenta</a></p>
+        </div>
+    </div>
+</div>
 {% endblock %}
