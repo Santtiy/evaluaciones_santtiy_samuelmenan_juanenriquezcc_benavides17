@@ -10,6 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+<<<<<<< HEAD
+=======
+import os
+>>>>>>> origin/develop
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< HEAD
 SECRET_KEY = 'django-insecure-zyhi=7czmpes6=#rro_3i*0#u0gi332(=%zd!ker3u0tj0c=b%'
+=======
+SECRET_KEY = 'django-insecure-ot^f*qhace*7r7%7$7eww-^_j2kz=7ursi*0hf*+vi@1t9_bms'
+>>>>>>> origin/develop
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
+=======
+    'usuarios',
+    'calificaciones'
+>>>>>>> origin/develop
 ]
 
 MIDDLEWARE = [
@@ -54,7 +67,11 @@ ROOT_URLCONF = 'evaluaciones_proyecto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+<<<<<<< HEAD
         'DIRS': [],
+=======
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+>>>>>>> origin/develop
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,3 +132,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+<<<<<<< HEAD
+=======
+
+# Redirige al login después de logout
+LOGIN_URL = '/usuarios/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/usuarios/login/'
+
+# Muestra el correo en la consola en lugar de enviarlo
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+>>>>>>> origin/develop
