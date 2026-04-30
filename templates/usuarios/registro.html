@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro - Sistema de Evaluaciones{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 120px);
+    }
+
+    .auth-card {
+        background: var(--bg-white);
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        width: 100%;
+        max-width: 450px;
+        padding: 3rem;
+        animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+
+    .auth-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .auth-header h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .auth-header p {
+        color: var(--text-light);
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--text);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: var(--transition);
+        background: var(--bg-white);
+    }
+
+    .form-group input::placeholder {
+        color: #d1d5db;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .form-group input:valid {
+        border-color: var(--success);
+    }
+
+    .password-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    @media (max-width: 600px) {
+        .password-fields {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-help {
+        font-size: 0.75rem;
+        color: var(--text-light);
+        margin-top: 0.25rem;
+    }
+
+    .errorlist {
+        list-style: none;
+        margin: 0.5rem 0 1rem 0;
+        padding: 0;
+    }
+
+    .errorlist li {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--danger);
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        border-left: 4px solid var(--danger);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-errors {
+        background: rgba(239, 68, 68, 0.05);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-errors p {
+        color: var(--danger);
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        margin-top: 1rem;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-submit:active {
+        transform: translateY(0);
+    }
+
+    .form-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+    }
+
+    .form-footer p {
+        color: var(--text-light);
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .form-footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+
+    .form-footer a:hover {
+        color: var(--primary-dark);
+        text-decoration: underline;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        margin: 1.5rem 0;
+        gap: 1rem;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+    }
+
+    .divider span {
+        color: var(--text-light);
+        font-size: 0.875rem;
+    }
+
+    .role-selector {
+        background: rgba(99, 102, 241, 0.05);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .role-selector label {
+        margin-bottom: 1rem !important;
+    }
+
+    .role-selector select {
+        background: var(--bg-white);
+        border: 2px solid var(--primary) !important;
+    }
+
+    .role-info {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 0.5rem;
+        padding: 0.75rem;
+        background: rgba(59, 130, 246, 0.05);
+        border-left: 3px solid var(--info);
+        border-radius: 4px;
+    }
+
+    @media (max-width: 480px) {
+        .auth-card {
+            padding: 1.5rem;
+        }
+
+        .auth-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .password-fields {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-icon">👤</div>
+            <h2>Crear Cuenta</h2>
+            <p>Únete a nuestro sistema de evaluaciones y comienza a colaborar con tu equipo</p>
+        </div>
+
+        {% if form.non_field_errors %}
+        <div class="form-errors">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Nombre de usuario</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.username.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <div class="form-help">Elige un nombre único para tu cuenta</div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Correo Electrónico</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <div class="form-help">Usaremos este correo para notificaciones importantes</div>
+            </div>
+
+            <!-- Role Selection -->
+            <div class="role-selector">
+                <label for="{{ form.rol.id_for_label }}">Selecciona tu Rol</label>
+                {{ form.rol }}
+                <div class="role-info">
+                    <strong>📋 Estudiante:</strong> Acceso a ver calificaciones<br>
+                    <strong>👨‍🏫 Profesor:</strong> Crear y editar calificaciones
+                </div>
+            </div>
+
+            <!-- Passwords -->
+            <div class="password-fields">
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}">Contraseña</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password1.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}">Confirmar</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.password2.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Crear Cuenta</button>
+        </form>
+
+        <div class="divider">
+            <span>¿Ya tienes cuenta?</span>
+        </div>
+
+        <div class="form-footer">
+            <p>
+                <a href="{% url 'usuarios:login' %}">Inicia sesión aquí</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
