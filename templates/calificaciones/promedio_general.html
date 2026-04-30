@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Promedio General{% endblock %}
+{% block content %}
+<h2>Promedio General</h2>
+{% if promedio_general %}
+  <p>El promedio general es: {{ promedio_general }}</p>
+{% else %}
+  <p>No hay calificaciones para calcular el promedio.</p>
+{% endif %}
+<a href="{% url 'listar' %}">Volver a la lista</a>
+{% endblock %}
