@@ -119,10 +119,17 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+<<<<<<< HEAD
 # Configuración de autenticación
 LOGIN_URL = 'usuarios:login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+=======
+# Redirige al login después de logout
+LOGIN_URL = '/usuarios/login/'
+LOGIN_REDIRECT_URL = '/usuarios/'
+LOGOUT_REDIRECT_URL = '/usuarios/login/'
+>>>>>>> origin/feature/password-reset-ui
 
 # Muestra el correo en la consola en lugar de enviarlo
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

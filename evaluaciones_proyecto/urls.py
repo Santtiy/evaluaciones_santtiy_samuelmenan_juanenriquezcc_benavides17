@@ -23,4 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('usuarios/', include('usuarios.urls')),
     path('calificaciones/', include('calificaciones.urls')),
+    # Rutas de auth (password reset, etc.)
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
