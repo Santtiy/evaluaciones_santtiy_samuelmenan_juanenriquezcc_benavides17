@@ -1,0 +1,44 @@
+# Dependencias congeladas locales
+requirements.txt
+
+# Entornos virtuales (variantes)
+venv
+venv/
+/venv
+/venv/
+.venv
+.venv/
+/.venv
+/.venv/
+env
+env/
+/env
+/env/
+ENV
+ENV/
+/ENV
+/ENV/
+
+# Python cache/compilados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribucion / empaquetado
+build/
+dist/
+*.egg-info/
+
+# Django / base de datos local
+*.sqlite3
+db.sqlite3
+
+# Archivos de entorno
+.env
+.env.*
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
