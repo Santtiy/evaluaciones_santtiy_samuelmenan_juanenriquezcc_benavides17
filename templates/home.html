@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Sistema de Evaluaciones{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 120px);
+        padding: 2rem 1rem;
+    }
+
+    .dashboard-card {
+        background: var(--bg-white);
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        padding: 3rem;
+        text-align: center;
+        max-width: 500px;
+        animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .dashboard-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .dashboard-card h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .dashboard-card p {
+        color: var(--text-light);
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .role-badge {
+        display: inline-block;
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--primary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .action-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    @media (min-width: 600px) {
+        .action-buttons {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .btn {
+        padding: 0.875rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-secondary {
+        background: var(--bg);
+        color: var(--primary);
+        border: 2px solid var(--primary);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(99, 102, 241, 0.1);
+    }
+
+    @media (max-width: 480px) {
+        .dashboard-card {
+            padding: 1.5rem;
+        }
+
+        .dashboard-card h2 {
+            font-size: 1.5rem;
+        }
+
+        .dashboard-icon {
+            font-size: 3rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-card">
+        <div class="dashboard-icon">👋</div>
+        <h2>¡Bienvenido!</h2>
+        
+        {% if user.groups.all %}
+            <div class="role-badge">
+                {% if user.groups.all.0.name %}
+                    {{ user.groups.all.0.name }}
+                {% endif %}
+            </div>
+            <p>Hola <strong>{{ user.get_full_name|default:user.username }}</strong>, bienvenido al sistema de evaluaciones.</p>
+        {% else %}
+            <p>Hola <strong>{{ user.username }}</strong>, has iniciado sesión exitosamente.</p>
+        {% endif %}
+
+        <div class="action-buttons">
+            {% if user.groups.all.0.name == 'Estudiante' %}
+                <a href="/calificaciones/" class="btn btn-primary">Ver Calificaciones</a>
+            {% elif user.groups.all.0.name == 'Profesor' %}
+                <a href="/calificaciones/" class="btn btn-primary">Administrar Calificaciones</a>
+                <a href="/admin/" class="btn btn-secondary">Panel Profesor</a>
+            {% elif user.groups.all.0.name == 'Administrador' %}
+                <a href="/admin/" class="btn btn-primary">Panel de Administración</a>
+                <a href="/calificaciones/" class="btn btn-secondary">Ver Evaluaciones</a>
+            {% else %}
+                <a href="/usuarios/logout/" class="btn btn-secondary">Cerrar Sesión</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

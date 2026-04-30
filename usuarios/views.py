@@ -4,6 +4,13 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import RegistroForm
 
 
+def home(request):
+    """Vista de inicio - redirige a login si no está autenticado."""
+    if request.user.is_authenticated:
+        return render(request, 'home.html')
+    return redirect('usuarios:login')
+
+
 def registro(request):
     """Vista de registro de usuarios con asignación de roles."""
     if request.method == 'POST':
@@ -22,7 +29,7 @@ def registro(request):
             user.groups.add(grupo)
             
             # Redirigir al login
-            return redirect('login')
+            return redirect('usuarios:login')
     else:
         form = RegistroForm()
 
