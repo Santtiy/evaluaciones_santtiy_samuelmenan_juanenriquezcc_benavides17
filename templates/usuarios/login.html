@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% extends 'base.html' %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <span class="eyebrow">Acceso al sistema</span>
+  <h1>Inicia sesión para administrar evaluaciones</h1>
+  <p>Entra con tu usuario para revisar calificaciones, continuar tu trabajo o recuperar el acceso si olvidaste tu contraseña.</p>
+</div>
+
+<section class="panel">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="primary" type="submit">Entrar</button>
+  </form>
+
+  <div class="muted-links">
+    <a href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+  </div>
+</section>
+{% endblock %}
+

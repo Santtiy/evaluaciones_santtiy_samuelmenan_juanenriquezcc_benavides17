@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <span class="eyebrow">Panel principal</span>
+  <h1>Bienvenido al sistema de evaluaciones</h1>
+  <p>Tu sesión está activa. Desde aquí puedes continuar el flujo de autenticación y volver al login o recuperar contraseña cuando lo necesites.</p>
+</div>
+
+<section class="panel stack">
+  <h2>Accesos rápidos</h2>
+  <p>Esta vista existe para que el proyecto tenga una ruta raíz funcional después del login.</p>
+  <div class="muted-links">
+    <a href="{% url 'login' %}">Ir al login</a>
+    <a href="{% url 'password_reset' %}">Recuperar contraseña</a>
+  </div>
+</section>
+{% endblock %}
