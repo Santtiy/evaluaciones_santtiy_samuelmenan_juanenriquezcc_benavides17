@@ -119,10 +119,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Redirige al login después de logout
-LOGIN_URL = '/usuarios/login/'
+# Configuración de autenticación
+LOGIN_URL = 'usuarios:login'
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/usuarios/login/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Muestra el correo en la consola en lugar de enviarlo
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

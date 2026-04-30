@@ -4,5 +4,5 @@ from . import views
 app_name = 'calificaciones'
 
 urlpatterns = [
-    # Las rutas serán completadas por el equipo de calificaciones
+    path('', views.lista_calificaciones, name='lista'),
 ]
