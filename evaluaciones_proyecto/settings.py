@@ -121,7 +121,7 @@ STATIC_URL = 'static/'
 
 # Redirige al login después de logout
 LOGIN_URL = '/usuarios/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/usuarios/'
 LOGOUT_REDIRECT_URL = '/usuarios/login/'
 
 # Muestra el correo en la consola en lugar de enviarlo
